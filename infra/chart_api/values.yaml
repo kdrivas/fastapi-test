@@ -1,0 +1,5 @@
+deployment:
+  name: fastapi-ml
+
+service:
+  name: fastapi-svc
