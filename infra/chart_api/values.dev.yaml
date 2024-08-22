@@ -1,0 +1,17 @@
+deployment:
+  name: fastapi-ml-dev
+  replicas: 1
+  container:
+    name: fastapi-ml-dev
+    image: cap2nemo/fastapi-ml:v1
+  resources:
+    memory: 512Mi
+    cpu: 500m
+  container_port: 8000
+
+service:
+  name: fastapi-svc-dev
+  type: LoadBalancer
+  selector: fastapi-ml-dev
+  port: 8000
+  targetPort: 8000

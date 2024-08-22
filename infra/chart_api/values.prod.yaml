@@ -1,0 +1,17 @@
+deployment:
+  name: fastapi-ml-prod
+  replicas: 1
+  container:
+    name: fastapi-ml-prod
+    image: fastapi-ml:v1
+  resources:
+    memory: 128Mi
+    cpu: 500m
+  container_port: 8000
+
+service:
+  name: fastapi-svc-prod
+  type: LoadBalancer
+  selector: fastapi-ml-prod
+  port: 8000
+  targetPort: 8000
