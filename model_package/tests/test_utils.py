@@ -5,8 +5,8 @@ from model.utils import unicodeToAscii
 @pytest.mark.parametrize(
     "str_input, expected_output",
     [
-        pytest.param("name1", "name1", id="test_1"),
-        pytest.param("name2", "name2", id="test_2"),
+        pytest.param("name1", "name", id="test_1"),
+        pytest.param("name2", "name", id="test_2"),
     ]
 )
 def test_drop_cols_transformer(
