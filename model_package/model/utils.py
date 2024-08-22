@@ -4,16 +4,12 @@ import torch
 from torch.autograd import Variable
 import random
 
-import glob
+import os
 import time
 import math
 import unicodedata
 
 from model.constants import ALL_LETTERS, N_LETTERS
-
-
-def findFiles(path: str) -> list:
-    return glob.glob(path)
 
 
 def unicodeToAscii(s: str) -> str:
@@ -31,14 +27,14 @@ def readLines(filename: str) -> list:
     return [unicodeToAscii(line) for line in lines]
 
 
-def get_categories(filename: str) -> tuple[list, dict]:
+def get_categories(data_path: str) -> tuple[list, dict]:
     """ Build the category_lines dictionary and a list of lines per category """
     category_lines = {}
     all_categories = []
-    for filename in findFiles(filename):
+    for filename in os.listdir(data_path):
         category = filename.split("/")[-1].split(".")[0]
         all_categories.append(category)
-        lines = readLines(filename)
+        lines = readLines(os.path.join(data_path, filename))
         category_lines[category] = lines
 
     return all_categories, category_lines
