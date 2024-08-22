@@ -4,6 +4,7 @@ import torch
 import torch.nn as nn
 import pickle
 import time
+import logging
 import os
 
 from model.classifier import RNN
@@ -16,6 +17,8 @@ from model.constants import (
     PLOT_EVERY,
     PRINT_EVERY,
 )
+
+logger = logging.getLogger(__name__)
 
 
 def make_step(category_tensor, line_tensor, rnn, optimizer, criterion):
@@ -33,8 +36,9 @@ def make_step(category_tensor, line_tensor, rnn, optimizer, criterion):
     return output, loss.data.item()
 
 
-def train(filename: str, artifact_path: str = "") -> None:
-    all_categories, category_lines = get_categories(filename)
+def train(artifact_path: str, data_path: str) -> None:
+    print(artifact_path)
+    all_categories, category_lines = get_categories(data_path)
     n_categories = len(all_categories)
 
     rnn = RNN(input_size=N_LETTERS, hidden_size=N_HIDDEN, output_size=n_categories)
@@ -58,7 +62,7 @@ def train(filename: str, artifact_path: str = "") -> None:
         if epoch % PRINT_EVERY == 0:
             guess = categoryFromOutput(output, all_categories)
             correct = "✓" if guess == category else "✗ (%s)" % category
-            print(
+            logging.info(
                 "%d %d%% (%s) %.4f %s / %s %s"
                 % (
                     epoch,
@@ -76,6 +80,7 @@ def train(filename: str, artifact_path: str = "") -> None:
             all_losses.append(current_loss / PLOT_EVERY)
             current_loss = 0
 
+    logging.info("Saving artifacts")
     torch.save(rnn.state_dict(), os.path.join(artifact_path, "model.pt"))
 
     with open(os.path.join(artifact_path, "categories.pkl"), "wb") as f:

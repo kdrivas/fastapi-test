@@ -1,9 +1,12 @@
 import torch
 from torch.autograd import Variable
+import logging
 
 from model.constants import N_HIDDEN, N_CATEGORIES, N_LETTERS
 from model.classifier import RNN
 from model.utils import lineToTensor
+
+logger = logging.getLogger(__name__)
 
 
 def load_model(weights_file: str) -> RNN:
@@ -35,7 +38,6 @@ def predict(name: str, n_predictions: int, model, all_categories: dict):
     for i in range(n_predictions):
         value = topv[0][i]
         category_index = topi[0][i]
-        print("(%.2f) %s" % (value, all_categories[category_index]))
         predictions.append(all_categories[category_index])
         probabilities.append(value.item())
 
