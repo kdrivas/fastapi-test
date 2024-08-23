@@ -54,6 +54,7 @@ docker run -p 8000:8000 fastapi-ml
 - To run the API in K8s, make sure to install local kubernetes cluster. Follow these CLI commands:
 ```
 brew install helm
+cd infra/chart_api
 helm install api-chart . -f values.dev.yaml
 ```
 - Check the deployment succeded:
@@ -106,7 +107,7 @@ Get the prediction given a name
 #### Example
 
 ```
-curl --location --request POST 'localhost:62380/get_prediction' \
+curl --location --request POST 'localhost:56687/get_prediction' \
     --header 'Content-Type: application/json' \
     --data-raw '{"name": "Jordan","n_predictions": 2}' 
 ```
