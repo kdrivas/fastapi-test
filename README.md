@@ -4,7 +4,7 @@
 1) Project structure
 2) Installation
 3) Endpoint
-4) Comments
+4) Comments and Improvements
 
 ## Project structure
 
@@ -67,7 +67,7 @@ Note: The port could change depending on the port assigned by minikube
 ### Health check
 Send a request to this route to verify the service is running
 
-**URL** : `localhost:8000/check_service`
+**URL** : `localhost:[port ! 8000]/check_service`
 
 **Method** : `GET`
 
@@ -90,7 +90,7 @@ curl --location --request GET 'localhost:8000/check_service'
 ### Prediccion
 Consultar por la prediccion de los datos enviados
 
-**URL** : `localhost:8090/get_prediction`
+**URL** : `localhost:[port ! 8000]/get_prediction`
 
 **Method** : `POST`
 
@@ -113,10 +113,7 @@ curl --location --request POST 'localhost:62380/get_prediction' \
 }
 ```
 
-## Comentarios
-- Usar una herramienta de monitoreo. Para las predicciones online, de debe implementar una conexion a una BD para el api en donde se guarden las predicciones que el modelo realiza asi como tambien los datos que recibe. Por otro lado, para las predicciones en batch, se guardan las predicciones y los features. Posteriormente, estos datos podran ser contrastados con los datos reales cuando se tengan y ser mostrados por un dashboard u otro medio.
-- Respecto a la degradacion del modelo, se puede schedular el entrenamiento cada cierto tiempo de acuerdo a las metricas observadas.
-
-## Mejoras
-- Mejorar las pruebas que se han realizado. Por cuestion de tiempo no pude implementar mas.
-- Mejorar la infraestructura usando Helm y Kubernetes en lugar de docker-compose
+## Comments and Improvements
+- Use a tool to monitor metrics of the API such as latency, error count.
+- Integrate a tool to send alerts if a SLO was achieved, for example, if the average latency in the last day was higher than 15sec
+- Use an orchestration tool such as Airflow or Kubeflow to automate the training pipeline
