@@ -41,10 +41,15 @@ spike_challenge
 ```
 
 ## Installation
-- If you wanna train the model from scratch, run these commands (This step is not necessary since the artifacts are in the repo):
+- [Not necessary] If you wanna train the model from scratch, run these commands (This step is not necessary since the artifacts are in the repo):
 ```
 pip install -e model_package 
 python -m model training_model artifacts data/names
+```
+- [Not necessary] In case, you wanna run the api locally without K8s:
+```
+docker build -t fastapi-ml -f Dockerfile . 
+docker run -p 8000:8000 fastapi-ml
 ```
 - To run the API, make sure to install local kubernetes cluster. Follow these CLI commands:
 ```
