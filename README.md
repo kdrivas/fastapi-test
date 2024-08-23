@@ -1,6 +1,6 @@
 # test-task
 
-## Contenido
+## Content
 1) Project structure
 2) Installation
 3) Endpoint
@@ -51,7 +51,7 @@ python -m model training_model artifacts data/names
 docker build -t fastapi-ml -f Dockerfile . 
 docker run -p 8000:8000 fastapi-ml
 ```
-- To run the API, make sure to install local kubernetes cluster. Follow these CLI commands:
+- To run the API in K8s, make sure to install local kubernetes cluster. Follow these CLI commands:
 ```
 brew install helm
 helm install api-chart . -f values.dev.yaml
@@ -76,13 +76,13 @@ Send a request to this route to verify the service is running
 
 **Method** : `GET`
 
-#### Ejemplo
+#### Example
 
 ```
 curl --location --request GET 'localhost:8000/check_service'
 ```
 
-#### Respuesta
+#### Response
 
 **Code** : `200 OK`
 
@@ -92,14 +92,18 @@ curl --location --request GET 'localhost:8000/check_service'
 }
 ```
 
-### Prediccion
-Consultar por la prediccion de los datos enviados
+### Prediction
+Get the prediction given a name
 
 **URL** : `localhost:[port ! 8000]/get_prediction`
 
 **Method** : `POST`
 
-#### Ejemplo
+#### Data
+- name: The input name for the model
+- n_predictions: The top K classes returned by the endpoint
+
+#### Example
 
 ```
 curl --location --request POST 'localhost:62380/get_prediction' \
@@ -107,7 +111,7 @@ curl --location --request POST 'localhost:62380/get_prediction' \
     --data-raw '{"name": "Jordan","n_predictions": 2}' 
 ```
 
-#### Respuesta
+#### Response
 
 **Code** : `200 OK`
 
